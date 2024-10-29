@@ -114,7 +114,7 @@ const List = ({list, setList, setIsLoading}) => {
   return (
     <div className='w-full p-5'>
         <div className='flex flex-col gap-y-4'>
-          {Array.isArray(list) && list.map((item, index)=>{
+          {Array.isArray(list) && list.length> 0 ? list.map((item, index)=>{
             return(
               <div key={index}>
                 {item.isUpdateMode 
@@ -148,7 +148,8 @@ const List = ({list, setList, setIsLoading}) => {
                   </div>}
               </div>
             )
-          })}
+          })
+        : <div className="bg-slate-100 p-4 rounded-lg"><p className='text-lg font-bold text-center text-black'>Không có công việc nào</p></div>}
         </div>
     </div>
   )
