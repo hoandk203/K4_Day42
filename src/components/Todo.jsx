@@ -19,12 +19,15 @@ const Todo = () => {
         if(!apiKey){
           const url = `/api-key?email=${userEmail}`
           const {data} = await client.get(url)
+          setIsLoading(true)
           if(data.data){
+            setIsLoading(false)
             const { apiKey } = data.data;
             toast.success(`Chào mừng ${userEmail}`)
             localStorage.setItem("userEmail", userEmail)
             localStorage.setItem("apiKey", apiKey)
           }else{
+            setIsLoading(false)
             toast.error("Email của bạn không được xác thực")
           }
         }
