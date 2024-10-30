@@ -56,8 +56,6 @@ const List = ({list, setList, setIsLoading}) => {
 
   // onUpdateMode
   const onUpdateMode= (e, item, type)=>{
-    console.log("onupdatemode");
-    
     e.target.disabled = true
     if(type){
       setList(list.map((listItem)=>{

@@ -11,8 +11,6 @@ const Form = ({list, setList, setIsLoading}) => {
   })
 
   const handleAdd =(e)=>{
-    console.log("add");
-    
     e.preventDefault()
     e.target.disabled= true;
     if(!task.todo){
@@ -26,7 +24,7 @@ const Form = ({list, setList, setIsLoading}) => {
         setIsLoading(false)
         e.target.disabled= false;
         toast.success("Thêm công việc thành công")
-        setList([task,...list])
+        setList([response.data.data,...list])
       }else{
         setIsLoading(false)
         toast.error("Thêm không thành công, vui lòng tải lại trang")

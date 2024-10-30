@@ -570,10 +570,6 @@ video {
   position: fixed;
 }
 
-.relative {
-  position: relative;
-}
-
 .inset-0 {
   inset: 0px;
 }
@@ -625,10 +621,6 @@ video {
 
 .h-full {
   height: 100%;
-}
-
-.min-h-10 {
-  min-height: 2.5rem;
 }
 
 .w-14 {
@@ -700,20 +692,12 @@ video {
   row-gap: 1rem;
 }
 
-.overflow-hidden {
-  overflow: hidden;
-}
-
 .rounded {
   border-radius: 0.25rem;
 }
 
 .rounded-lg {
   border-radius: 0.5rem;
-}
-
-.rounded-md {
-  border-radius: 0.375rem;
 }
 
 .border {
@@ -789,10 +773,6 @@ video {
 
 .p-5 {
   padding: 1.25rem;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .px-3 {

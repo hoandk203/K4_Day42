@@ -17,6 +17,11 @@ const Todo = () => {
           setList(data.data.listTodo)
       }else{
           toast.error("Không tìm thấy dữ liệu, vui lòng tải lại trang")
+          localStorage.removeItem("apiKey")
+          localStorage.removeItem("userEmail")
+          setTimeout(() => {
+              window.location.reload()
+          }, 3000);
       }
     }, [])
 
