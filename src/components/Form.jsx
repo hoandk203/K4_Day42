@@ -11,6 +11,9 @@ const Form = ({list, setList, setIsLoading}) => {
   })
 
   const handleAdd =(e)=>{
+    console.log("add");
+    
+    e.preventDefault()
     e.target.disabled= true;
     if(!task.todo){
       toast.error("Công việc không được để trống")
@@ -31,7 +34,7 @@ const Form = ({list, setList, setIsLoading}) => {
         localStorage.removeItem("userEmail")
         setTimeout(() => {
           window.location.reload()
-        }, 2000);
+        }, 3000);
       }
     })
     setTask({
@@ -63,7 +66,7 @@ const Form = ({list, setList, setIsLoading}) => {
         localStorage.removeItem("userEmail")
         setTimeout(() => {
           window.location.reload()
-        }, 2000);
+        }, 3000);
       }
     })
     
@@ -85,9 +88,11 @@ const Form = ({list, setList, setIsLoading}) => {
     <div>
         {isSearchMode
         ? <div className='flex gap-y-2'>
-            <div className='flex gap-x-2'>
+            <div>
+              <form action='' className='flex gap-x-2'>
                 <input onChange={handleChange} value={task.todo} placeholder="Tìm tên công việc" required  type="text" id="first_name" className="min-w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                <button onClick={handleAdd} type="button" className="h-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Thêm</button>
+                <button disabled type="submit" className="line-through h-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Thêm</button>
+              </form>
             </div>
             <div>
               <button onClick={()=>{toggleSearchMode("add")}} type="submit" className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -96,9 +101,11 @@ const Form = ({list, setList, setIsLoading}) => {
             </div>
           </div>
         : <div className='flex gap-y-2'>
-            <div className='flex gap-x-2'>
+            <div>
+              <form action='' onSubmit={handleAdd} className='flex gap-x-2'>
                 <input onChange={handleChange} value={task.todo} placeholder="Thêm công việc" required  type="text" id="first_name" className="min-w-[300px] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                <button onClick={handleAdd} type="button" className="h-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Thêm</button>
+                <button type="submit" className="h-full focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Thêm</button>
+              </form>
             </div>
             <div>
               <button onClick={()=>{toggleSearchMode("search")}} type="submit" className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

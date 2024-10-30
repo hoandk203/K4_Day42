@@ -2,8 +2,7 @@ import React, {useEffect, useState, useCallback} from 'react'
 import {Form, List} from './index.js'
 import { getTodos } from '../services/todoService.js'
 import { client } from '../utils/clientUtils.js'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 let userEmail= localStorage.getItem("userEmail")
 let apiKey= localStorage.getItem("apiKey")
@@ -12,49 +11,49 @@ const Todo = () => {
     const [list, setList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
-    const getApiKey = useCallback(async () => {
-        if(!userEmail){
-          userEmail = prompt("Nhập email của bạn:")
-        }
-        if(!apiKey){
-          const url = `/api-key?email=${userEmail}`
-          const {data} = await client.get(url)
-          setIsLoading(true)
-          if(data.data){
-            setIsLoading(false)
-            const { apiKey } = data.data;
-            toast.success(`Chào mừng ${userEmail}`)
-            localStorage.setItem("userEmail", userEmail)
-            localStorage.setItem("apiKey", apiKey)
-          }else{
-            setIsLoading(false)
-            toast.error("Email của bạn không được xác thực")
-          }
-        }
-      }, [])
-  
     const getList= useCallback(async()=>{
-        const {data} = await getTodos(localStorage.getItem("apiKey"))
-        if(data.data){
-            setList(data.data.listTodo)
-        }else{
-            toast.error("Không tìm thấy dữ liệu, vui lòng tải lại trang")
-            localStorage.removeItem("apiKey")
-            localStorage.removeItem("userEmail")
-            setTimeout(() => {
-                window.location.reload()
-            }, 2000);
-        }
+      const {data} = await getTodos(localStorage.getItem("apiKey"))
+      if(data.data){
+          setList(data.data.listTodo)
+      }else{
+          toast.error("Không tìm thấy dữ liệu, vui lòng tải lại trang")
+      }
     }, [])
 
-    const fetchData = useCallback(async ()=>{
-        await getApiKey()
-        await getList()
+    const getApiKey = useCallback(async () => {
+      if(!userEmail){
+        userEmail = prompt("Nhập email của bạn:")
+      }
+      if(!apiKey){
+        const url = `/api-key?email=${userEmail}`
+        const {data} = await client.get(url)
+        setIsLoading(true)
+        if(data.data){
+          setIsLoading(false)
+          const { apiKey } = data.data;
+          toast.success(`Chào mừng ${userEmail}`)
+          localStorage.setItem("userEmail", userEmail)
+          localStorage.setItem("apiKey", apiKey)
+          getList()
+        }else{
+          setIsLoading(false)
+          toast.error("Email của bạn không được xác thực")
+          localStorage.removeItem("apiKey")
+          localStorage.removeItem("userEmail")
+          setTimeout(() => {
+              window.location.reload()
+          }, 3000);
+        }
+      }
     }, [])
-    
+  
     useEffect(()=>{
-        fetchData()
+      getApiKey()
+      if(apiKey){
+        getList()
+      }
     }, [])
+
   return (
     <div>
         {isLoading && (
@@ -69,7 +68,7 @@ const Todo = () => {
             </div>
           </div>
         )}
-        <ToastContainer autoClose={2000}/>
+        
         <div className='max-w-[1000px] mx-auto bg-slate-600 flex flex-col items-center justify-center text-white'>
             <h1 className='text-3xl font-bold mb-5'>Todo App</h1>
             <Form list={list} setList={setList} apiKey={apiKey} setIsLoading={setIsLoading}/>
